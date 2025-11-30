@@ -6,20 +6,20 @@ Created on Sat Nov 29 22:09:07 2025
 """
 import os
 
-folder = 'C:\\Marcin\\progr\\python\\'
-p = folder + 'testowy.txt'
+dir = 'C:\\Marcin\\progr\\python\\'
+pathStr = dir + 'testowy.txt'
 
-with open(p,'r') as f:
+with open(pathStr,'r') as f:
     content = f.read()
     
     print(content)
     
 
-p = folder + 'XXXudemy_k2_s2_13lab_pliki.py'
-if os.path.exists(p):
-    print(f"--jest plik {p}")
-    with open(p, 'r') as f:
+pathStr = dir + 'XXXudemy_k2_s2_13lab_pliki.py'
+if os.path.exists(pathStr):
+    print(f"--jest plik {pathStr}")
+    with open(pathStr, 'r') as f:
         for line in f:
             print(f"{line}")
 else:
-    print(f"--brak pliku {p}")
+    print(f"--brak pliku {pathStr}")
