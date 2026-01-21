@@ -7,15 +7,14 @@ while True:
     print("-----------------")
     print("wybierz opcje:")
     print("W - wyswietl produkty")
-    print("D - dodaj produkt")
-    print("U - usun produkt")
+    # print("D - dodaj produkt")
+    # print("U - usun produkt")
     print("Z - zakupy")
     print("K - zawartosc kosza")
     print("Q - koniec")
     print("------------")
-    print("-Twoj wybor? ")
 
-    opcja = input().upper()
+    opcja = input("-Twoj wybor: ").upper()
 
     if opcja == "W":
         print(f"aktualne produkty w sklepie:")
@@ -24,35 +23,31 @@ while True:
     elif opcja == "D":
         print("wprowadz nazwy i ceny produktow ('Q' konczy wprowadzanie)")
         while True:
-            print("--podaj nazwe nowego produktu:")
-            nowyProdukt = input()
+            print()
+            nowyProdukt = input("--podaj nazwe nowego produktu: ")
             if nowyProdukt.upper() == 'Q':
                 print(f"koniec wprowadzania (liczba produktow: {len(produkty)})")
                 break
             elif nowyProdukt in produkty:
                 print(f"produkt '{nowyProdukt}' juz jest w sklepie")
             else:
-                print(f"--podaj cene zl dla '{nowyProdukt}':")
-                cena = int(input())
+                cena = int(input(f"--podaj cene zl dla '{nowyProdukt}': "))
                 produkty.append(nowyProdukt)
                 ceny.append(cena)
                 print(f"dodano produkt: '{nowyProdukt}' z cena {cena}")
     elif opcja == "U":
-        print("--podaj nazwe produktu do usuniecia:")
-        delProdukt = input()
+        delProdukt = input("--podaj nazwe produktu do usuniecia: ")
         if delProdukt in produkty:
             produkty.remove(delProdukt)
             print(f"usunieto produkt '{delProdukt}'")
         else:
             print(f"produktu '{delProdukt}' nie ma w sklepie")
     elif opcja == "Z":
-        print("--podaj nazwe kupowanego produktu:")
-        produkt = input()
+        produkt = input("--podaj nazwe kupowanego produktu: ")
         if produkt in produkty:
             indeksProduktu = produkty.index(produkt)
             cenaProduktu = ceny[indeksProduktu]
-            print(f"--{produkt} kosztuje cena: {cenaProduktu} - podaj ile sztuk chcesz kupic:")
-            ile = int(input())
+            ile = int(input(f"--{produkt} kosztuje cena: {cenaProduktu} - podaj ile sztuk chcesz kupic: "))
             koszyk.append(produkt)
             koszykIlosci.append(ile)
             print(f"dodales do koszyka produkt: '{produkt}' - wartosc {ile}*{cenaProduktu}={ile*cenaProduktu}")
@@ -72,5 +67,4 @@ while True:
     elif opcja == "Q":
         break
 
-    print("press any key to continue")
-    input()
+    input("press any key to continue")
