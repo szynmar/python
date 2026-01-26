@@ -164,17 +164,82 @@ def getMinResByBranchAndBound(tab, res, items, dictOp):
 
     return res
 
-# tab=tabOld
-tab = genRandomTable(8)
+def redukcjaOMinima(tabIn,dictOp):
+    tab = [row[:] for row in tabIn]
+    for i in range(len(tab)):
+        minWiersza = min(tab[i])
+        for j in range(len(tab[i])):
+            tab[i][j] -= minWiersza
+
+    # wypisz(tab)
+
+    for j in range(len(tab[0])):
+        minKolumny = tab[0][j]
+        for i in range(1,len(tab)):
+            if tab[i][j] < minKolumny:
+                minKolumny = tab[i][j]
+
+        for i in range(len(tab)):
+            tab[i][j] -= minKolumny
+
+    return tab
+
+def tabTransponowana(tab):
+    tabT = [row[:] for row in tab]
+    for i in range(len(tabT)-1):
+        for j in range(i+1,len(tabT[i])):
+            pom = tabT[i][j]
+            tabT[i][j] = tabT[j][i]
+            tabT[j][i] = pom
+
+    return tabT
+
+def redukcjaOczywisteZera(tabIn,dictOp):
+    if len(tabIn) == 0:
+        return
+
+    wypisz(tabIn)
+    tab = [row[:] for row in tabIn]
+    tabT = tabTransponowana(tab)
+
+    for i in range(len(tab)):
+        if tab[i].count(0) == 1:
+            print(f" pojednycze zero w wierszu nr {i}: {tab[i]} {tab[i].index(0)}")
+            idx0 = tab[i].index(0)
+            if tabT[idx0].count(0) == 1:
+                print(f"  w kolumnie nr {idx0} ({tabT[idx0]}) tez jest jedno zero {tabT[idx0].index(0)}")
+                print(f"  czyli znalezione to {[i,idx0]}")
+                redukcjaOczywisteZera(getSubTab(tab,i,idx0),dictOp)
+
+                return
+
+
+
+tab=tabOld
+wypisz(tab)
+dictOp = {"add": 0, "comp": 0}
+tab0 = redukcjaOMinima(tab,dictOp)
+wypisz(tab0)
+redukcjaOczywisteZera(tab0,dictOp)
+# tabT = tabTransponowana(tab)
+# wypisz(tabT)
+# redukcjaOczywisteZera(tabT,dictOp)
+# tab=getSubTab(tab, 4,4)
+# tab = genRandomTable(8)
 # save_table(tab)
 # tab = load_table()
 
 wypisz(tab)
 
-print("-"*10)
-
 dictOp = {"add": 0, "comp": 0}
-print(" -- " + str(getMinResByBranchAndBound(tab, [], [], dictOp)))
-print(dictOp)
-print("- "*10)
-wypisz(tab)
+# print(str(getQuickBound(tab,dictOp)))
+# print(dictOp)
+
+# print("-"*10)
+
+# dictOp = {"add": 0, "comp": 0}
+resMinL = getMinResByBranchAndBound(tab, [], [], dictOp)
+print(" -- suma=" + str(sum(resMinL)) + ' dla ' + str(resMinL))
+# print(dictOp)
+# print("- "*10)
+# wypisz(tab)
